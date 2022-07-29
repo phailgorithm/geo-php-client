@@ -59,12 +59,15 @@ class CityRepository
      * Get a list of cities closed to a given city
      *
      * @param integer|string $unique
+     * @param integer $limit
      * @return City[]
      */
-    public function nearby(int|string $unique): array
+    public function nearby(int|string $unique, int $limit = 21): array
     {
         $cities = [];
-        $response = $this->client->get('cities/' . $unique . '/nearby');
+        $response = $this->client->get('cities/' . $unique . '/nearby', ['query' => [
+            'limit' => $limit
+        ]]);
 
         if ($response->getStatusCode() == 200) {
             foreach (json_decode($response->getBody(), true) as $city) {
