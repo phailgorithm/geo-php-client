@@ -36,7 +36,6 @@ class CityRepository
         }
     }
 
-
     /**
      * Get an optional city resource via unique intege id or unique string key
      *
