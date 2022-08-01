@@ -99,4 +99,26 @@ class CityRepository
 
         return $cities;
     }
+
+    /**
+     * Get list of cities in bulk by city ids.
+     *
+     * @param array $ids
+     * @return array
+     */
+    public function list(array $ids = array()): array
+    {
+        $cities = [];
+        $response = $this->client->get('cities', ['body' => json_encode(
+            ['ids' => $ids]
+        )]);
+
+        if ($response->getStatusCode() == 200) {
+            foreach (json_decode($response->getBody(), true) as $city) {
+                array_push($cities, City::fromJson($city));
+            }
+        }
+
+        return $cities;
+    }
 }

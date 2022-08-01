@@ -153,4 +153,38 @@ final class GeoClientTest extends TestCase
         $this->assertEquals($cities[2]->coords->lat, '14.25');
         $this->assertEquals($cities[2]->coords->lng, '40.83333');
     }
+
+    public function testGetCitiesByIds(): void
+    {
+        $cities = $this->client->cities->list([3169070, 3173435, 3172394]);
+
+        $this->assertIsArray($cities);
+        $this->assertEquals(count($cities), 3);
+
+        foreach ($cities as $city) {
+            $this->assertInstanceOf('Phailgorithm\GeoClient\v1\Models\City', $city);
+            $this->assertInstanceOf('Phailgorithm\GeoClient\v1\Models\Coords', $city->coords);
+        }
+
+        $this->assertEquals($cities[0]->id, 3169070);
+        $this->assertEquals($cities[0]->key, 'roma');
+        $this->assertEquals($cities[0]->name, 'Roma');
+        $this->assertEquals($cities[0]->population, 2563241);
+        $this->assertEquals($cities[0]->coords->lat, '12.4839');
+        $this->assertEquals($cities[0]->coords->lng, '41.89474');
+
+        $this->assertEquals($cities[1]->id, 3173435);
+        $this->assertEquals($cities[1]->key, 'milano');
+        $this->assertEquals($cities[1]->name, 'Milano');
+        $this->assertEquals($cities[1]->population, 1306661);
+        $this->assertEquals($cities[1]->coords->lat, '9.18951');
+        $this->assertEquals($cities[1]->coords->lng, '45.46427');
+
+        $this->assertEquals($cities[2]->id, 3172394);
+        $this->assertEquals($cities[2]->key, 'napoli');
+        $this->assertEquals($cities[2]->name, 'Napoli');
+        $this->assertEquals($cities[2]->population, 959574);
+        $this->assertEquals($cities[2]->coords->lat, '14.25');
+        $this->assertEquals($cities[2]->coords->lng, '40.83333');
+    }
 }
